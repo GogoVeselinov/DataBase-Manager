@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34916.146
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBase Manager", "DataBase Manager\DataBase Manager.csproj", "{89D7320A-6658-45EE-BD4F-53DFA86DC523}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89D7320A-6658-45EE-BD4F-53DFA86DC523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89D7320A-6658-45EE-BD4F-53DFA86DC523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89D7320A-6658-45EE-BD4F-53DFA86DC523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89D7320A-6658-45EE-BD4F-53DFA86DC523}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E76DC743-7786-4E4C-A3D9-81920B71B651}
+	EndGlobalSection
+EndGlobal
