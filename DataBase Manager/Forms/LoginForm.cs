@@ -13,7 +13,27 @@ namespace DataBase_Manager
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string connectionString = "Data Source=LAPTOP-GEORGI-X;Initial Catalog=System_DriversInfo;Integrated Security=True;Encrypt=False"; // Replace with your actual connection string
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtUsername_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e) //Working.
+        {
+            string connectionString = "Server=LAPTOP-GEORGI-X;Database=DataBase_Manager;Integrated Security=True;";
             string username = txtUsername.Text;
             string password = txtPassword.Text;
 
@@ -34,7 +54,7 @@ namespace DataBase_Manager
                         // Login successful
                         MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Hide();
-                        MainForm mainForm = new MainForm(); 
+                        MainForm mainForm = new MainForm();
                         mainForm.Show();
                     }
                     else
@@ -50,12 +70,7 @@ namespace DataBase_Manager
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }
