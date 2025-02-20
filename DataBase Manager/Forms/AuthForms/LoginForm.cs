@@ -54,7 +54,7 @@ namespace DataBase_Manager
                         // Login successful
                         MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Hide();
-                        MainForm mainForm = new MainForm();
+                        Dashboard mainForm = new Dashboard();
                         mainForm.Show();
                     }
                     else
@@ -71,6 +71,11 @@ namespace DataBase_Manager
         }
 
         private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
         {
 
         }
