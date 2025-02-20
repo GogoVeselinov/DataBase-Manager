@@ -312,9 +312,12 @@ namespace DataBase_Manager
             {
                 var selectedRow = dataGridViewDatabases.Rows[e.RowIndex];
                 string databaseName = selectedRow.Cells["DatabaseName"].Value.ToString();
-                // Implement the logic to view information about the selected database on double-click
-                MessageBox.Show($"Double-click functionality for {databaseName} not implemented yet.", "Database Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Open the DatabaseDetailsForm for the selected database
+                DatabaseDetailsForm detailsForm = new DatabaseDetailsForm(databaseName);
+                detailsForm.Show();
             }
         }
+
     }
 }

@@ -48,17 +48,18 @@
   <ItemGroup>
     <Compile Include="DatabaseConfig.cs" />
     <Compile Include="Data\Security\FilePermissionHelper.cs" />
+    <Compile Include="Data\Security\Prompt.cs" />
     <Compile Include="Forms\DatabaseForms\CreateDatabaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\DatabaseForms\CreateDatabaseForm.Designer.cs">
       <DependentUpon>CreateDatabaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DatabaseForms\ViewDatabaseTables.cs">
+    <Compile Include="Forms\DatabaseForms\DatabaseDetailsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\DatabaseForms\ViewDatabaseTables.Designer.cs">
-      <DependentUpon>ViewDatabaseTables.cs</DependentUpon>
+    <Compile Include="Forms\DatabaseForms\DatabaseDetailsForm.Designer.cs">
+      <DependentUpon>DatabaseDetailsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MainForms\Dashboard.cs">
       <SubType>Form</SubType>
@@ -79,6 +80,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DatabaseForms\CreateDatabaseForm.resx">
       <DependentUpon>CreateDatabaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DatabaseForms\DatabaseDetailsForm.resx">
+      <DependentUpon>DatabaseDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForms\Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
