@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataBase_Manager.Forms.AuthForms;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace DataBase_Manager
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
+            Application.Run(new LoginRegisterForm());
         }
     }
 }

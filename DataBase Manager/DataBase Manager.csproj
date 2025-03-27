@@ -67,16 +67,16 @@
     <Compile Include="Forms\MainForms\Dashboard.Designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\AuthForms\LoginForm.cs">
+    <Compile Include="Forms\AuthForms\LoginRegisterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AuthForms\LoginForm.Designer.cs">
-      <DependentUpon>LoginForm.cs</DependentUpon>
+    <Compile Include="Forms\AuthForms\LoginRegisterForm.Designer.cs">
+      <DependentUpon>LoginRegisterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\AuthForms\LoginForm.resx">
-      <DependentUpon>LoginForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\AuthForms\LoginRegisterForm.resx">
+      <DependentUpon>LoginRegisterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DatabaseForms\CreateDatabaseForm.resx">
       <DependentUpon>CreateDatabaseForm.cs</DependentUpon>
