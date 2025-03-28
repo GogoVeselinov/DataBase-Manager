@@ -7,7 +7,10 @@ namespace DataBase_Manager.Forms.DatabaseForms
 {
     public partial class DatabaseDetailsForm : Form
     {
-        private string _databaseName;
+        private readonly string _databaseName;
+        private DataTable _tables;
+        private DataTable _columns;
+        private DataTable _rows;
 
         public DatabaseDetailsForm(string databaseName)
         {
@@ -22,14 +25,25 @@ namespace DataBase_Manager.Forms.DatabaseForms
 
         private void LoadTables()
         {
-            using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+            try
             {
-                connection.Open();
-                string query = $"USE [{_databaseName}]; SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'";
-                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
-                DataTable tables = new DataTable();
-                adapter.Fill(tables);
-                dataGridViewTables.DataSource = tables;
+                using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+                {
+                    connection.Open();
+                    string query = $"USE [{_databaseName}]; SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'";
+                    SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+                    _tables = new DataTable();
+                    adapter.Fill(_tables);
+                    dataGridViewTables.DataSource = _tables;
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"An error occurred while loading tables: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -45,27 +59,64 @@ namespace DataBase_Manager.Forms.DatabaseForms
 
         private void LoadColumns(string tableName)
         {
-            using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+            try
             {
-                connection.Open();
-                string query = $"USE [{_databaseName}]; SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{tableName}'";
-                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
-                DataTable columns = new DataTable();
-                adapter.Fill(columns);
-                dataGridViewColumns.DataSource = columns;
+                using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+                {
+                    connection.Open();
+                    string query = $"USE [{_databaseName}]; SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{tableName}'";
+                    SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+                    _columns = new DataTable();
+                    adapter.Fill(_columns);
+                    dataGridViewColumns.DataSource = _columns;
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"An error occurred while loading columns: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void LoadRows(string tableName)
         {
-            using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+            try
             {
-                connection.Open();
-                string query = $"USE [{_databaseName}]; SELECT * FROM [{tableName}]";
-                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
-                DataTable rows = new DataTable();
-                adapter.Fill(rows);
-                dataGridViewRows.DataSource = rows;
+                using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+                {
+                    connection.Open();
+                    // Check if the table exists
+                    string checkTableQuery = $"USE [{_databaseName}]; SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '{tableName}'";
+                    SqlCommand checkTableCommand = new SqlCommand(checkTableQuery, connection);
+                    int tableCount = (int)checkTableCommand.ExecuteScalar();
+
+                    if (tableCount > 0)
+                    {
+                        // Table exists, load rows
+                        string query = $"USE [{_databaseName}]; SELECT * FROM [{tableName}]";
+                        SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+                        _rows = new DataTable();
+                        adapter.Fill(_rows);
+                        dataGridViewRows.DataSource = _rows;
+                    }
+                    else
+                    {
+                        // Table does not exist, handle accordingly
+                        MessageBox.Show($"Table '{tableName}' does not exist in the database.", "Table Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        dataGridViewRows.DataSource = null;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"An error occurred while loading rows: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -74,13 +125,24 @@ namespace DataBase_Manager.Forms.DatabaseForms
             string tableName = Prompt.ShowDialog("Enter table name:", "Create Table");
             if (!string.IsNullOrEmpty(tableName))
             {
-                using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+                try
                 {
-                    connection.Open();
-                    string query = $"USE [{_databaseName}]; CREATE TABLE [{tableName}] (ID INT PRIMARY KEY)";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.ExecuteNonQuery();
-                    LoadTables();
+                    using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+                    {
+                        connection.Open();
+                        string query = $"USE [{_databaseName}]; CREATE TABLE [{tableName}] (ID INT PRIMARY KEY)";
+                        SqlCommand command = new SqlCommand(query, connection);
+                        command.ExecuteNonQuery();
+                        LoadTables();
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show($"An error occurred while creating the table: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -93,13 +155,24 @@ namespace DataBase_Manager.Forms.DatabaseForms
                 string newTableName = Prompt.ShowDialog("Enter new table name:", "Edit Table", tableName);
                 if (!string.IsNullOrEmpty(newTableName) && newTableName != tableName)
                 {
-                    using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+                    try
                     {
-                        connection.Open();
-                        string query = $"USE [{_databaseName}]; EXEC sp_rename '{tableName}', '{newTableName}'";
-                        SqlCommand command = new SqlCommand(query, connection);
-                        command.ExecuteNonQuery();
-                        LoadTables();
+                        using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+                        {
+                            connection.Open();
+                            string query = $"USE [{_databaseName}]; EXEC sp_rename '{tableName}', '{newTableName}'";
+                            SqlCommand command = new SqlCommand(query, connection);
+                            command.ExecuteNonQuery();
+                            LoadTables();
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        MessageBox.Show($"An error occurred while renaming the table: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -110,13 +183,24 @@ namespace DataBase_Manager.Forms.DatabaseForms
             if (dataGridViewTables.SelectedRows.Count > 0)
             {
                 string tableName = dataGridViewTables.SelectedRows[0].Cells[0].Value.ToString();
-                using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+                try
                 {
-                    connection.Open();
-                    string query = $"USE [{_databaseName}]; DELETE FROM [{tableName}]";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.ExecuteNonQuery();
-                    LoadRows(tableName);
+                    using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+                    {
+                        connection.Open();
+                        string query = $"USE [{_databaseName}]; DELETE FROM [{tableName}]";
+                        SqlCommand command = new SqlCommand(query, connection);
+                        command.ExecuteNonQuery();
+                        LoadRows(tableName);
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show($"An error occurred while deleting data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -126,13 +210,24 @@ namespace DataBase_Manager.Forms.DatabaseForms
             if (dataGridViewTables.SelectedRows.Count > 0)
             {
                 string tableName = dataGridViewTables.SelectedRows[0].Cells[0].Value.ToString();
-                using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+                try
                 {
-                    connection.Open();
-                    string query = $"USE [{_databaseName}]; INSERT INTO [{tableName}] (ID) VALUES (NEWID())";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.ExecuteNonQuery();
-                    LoadRows(tableName);
+                    using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+                    {
+                        connection.Open();
+                        string query = $"USE [{_databaseName}]; INSERT INTO [{tableName}] (ID) VALUES (NEWID())";
+                        SqlCommand command = new SqlCommand(query, connection);
+                        command.ExecuteNonQuery();
+                        LoadRows(tableName);
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show($"An error occurred while adding a row: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -143,16 +238,39 @@ namespace DataBase_Manager.Forms.DatabaseForms
             {
                 string tableName = dataGridViewTables.SelectedRows[0].Cells[0].Value.ToString();
                 string searchTerm = txtSearch.Text;
-                using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+                try
                 {
-                    connection.Open();
-                    string query = $"USE [{_databaseName}]; SELECT * FROM [{tableName}] WHERE ID LIKE '%{searchTerm}%'";
-                    SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
-                    DataTable results = new DataTable();
-                    adapter.Fill(results);
-                    dataGridViewRows.DataSource = results;
+                    using (SqlConnection connection = new SqlConnection(DatabaseConfig.ConnectionString))
+                    {
+                        connection.Open();
+                        string query = $"USE [{_databaseName}]; SELECT * FROM [{tableName}] WHERE ID LIKE '%{searchTerm}%'";
+                        SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+                        DataTable results = new DataTable();
+                        adapter.Fill(results);
+                        dataGridViewRows.DataSource = results;
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show($"An error occurred while searching: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void DatabaseDetailsForm_Load_1(object sender, EventArgs e)
+        {
+        }
+
+        private void dataGridViewColumns_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+        }
+
+        private void dataGridViewTables_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
         }
     }
 }

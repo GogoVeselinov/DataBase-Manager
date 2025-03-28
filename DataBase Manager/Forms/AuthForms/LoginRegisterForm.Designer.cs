@@ -30,26 +30,26 @@
             // txtUsername
             // 
             this.txtUsername.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtUsername.Location = new System.Drawing.Point(144, 3);
+            this.txtUsername.Location = new System.Drawing.Point(215, 3);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(323, 22);
+            this.txtUsername.Size = new System.Drawing.Size(491, 22);
             this.txtUsername.TabIndex = 0;
             // 
             // txtPassword
             // 
             this.txtPassword.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtPassword.Location = new System.Drawing.Point(144, 58);
+            this.txtPassword.Location = new System.Drawing.Point(215, 79);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(323, 22);
+            this.txtPassword.Size = new System.Drawing.Size(491, 22);
             this.txtPassword.TabIndex = 1;
             this.txtPassword.UseSystemPasswordChar = true;
             // 
             // txtConfirmPassword
             // 
             this.txtConfirmPassword.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtConfirmPassword.Location = new System.Drawing.Point(144, 113);
+            this.txtConfirmPassword.Location = new System.Drawing.Point(215, 155);
             this.txtConfirmPassword.Name = "txtConfirmPassword";
-            this.txtConfirmPassword.Size = new System.Drawing.Size(323, 22);
+            this.txtConfirmPassword.Size = new System.Drawing.Size(491, 22);
             this.txtConfirmPassword.TabIndex = 2;
             this.txtConfirmPassword.UseSystemPasswordChar = true;
             this.txtConfirmPassword.Visible = false;
@@ -60,18 +60,19 @@
             this.lblUsername.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblUsername.Location = new System.Drawing.Point(3, 0);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(135, 55);
+            this.lblUsername.Size = new System.Drawing.Size(206, 76);
             this.lblUsername.TabIndex = 3;
             this.lblUsername.Text = "Username";
             this.lblUsername.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblUsername.Click += new System.EventHandler(this.lblUsername_Click);
             // 
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
             this.lblPassword.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblPassword.Location = new System.Drawing.Point(3, 55);
+            this.lblPassword.Location = new System.Drawing.Point(3, 76);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(135, 55);
+            this.lblPassword.Size = new System.Drawing.Size(206, 76);
             this.lblPassword.TabIndex = 4;
             this.lblPassword.Text = "Password";
             this.lblPassword.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -80,9 +81,9 @@
             // 
             this.lblConfirmPassword.AutoSize = true;
             this.lblConfirmPassword.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblConfirmPassword.Location = new System.Drawing.Point(3, 110);
+            this.lblConfirmPassword.Location = new System.Drawing.Point(3, 152);
             this.lblConfirmPassword.Name = "lblConfirmPassword";
-            this.lblConfirmPassword.Size = new System.Drawing.Size(135, 55);
+            this.lblConfirmPassword.Size = new System.Drawing.Size(206, 76);
             this.lblConfirmPassword.TabIndex = 5;
             this.lblConfirmPassword.Text = "Confirm Password";
             this.lblConfirmPassword.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -91,9 +92,9 @@
             // btnAction
             // 
             this.btnAction.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnAction.Location = new System.Drawing.Point(144, 168);
+            this.btnAction.Location = new System.Drawing.Point(215, 231);
             this.btnAction.Name = "btnAction";
-            this.btnAction.Size = new System.Drawing.Size(323, 49);
+            this.btnAction.Size = new System.Drawing.Size(491, 70);
             this.btnAction.TabIndex = 6;
             this.btnAction.Text = "Login";
             this.btnAction.UseVisualStyleBackColor = true;
@@ -102,9 +103,9 @@
             // btnSwitchMode
             // 
             this.btnSwitchMode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSwitchMode.Location = new System.Drawing.Point(144, 223);
+            this.btnSwitchMode.Location = new System.Drawing.Point(215, 307);
             this.btnSwitchMode.Name = "btnSwitchMode";
-            this.btnSwitchMode.Size = new System.Drawing.Size(323, 52);
+            this.btnSwitchMode.Size = new System.Drawing.Size(491, 70);
             this.btnSwitchMode.TabIndex = 7;
             this.btnSwitchMode.Text = "Switch to Register";
             this.btnSwitchMode.UseVisualStyleBackColor = true;
@@ -132,14 +133,14 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(470, 278);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(709, 380);
             this.tableLayoutPanel.TabIndex = 0;
             // 
             // LoginRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 278);
+            this.ClientSize = new System.Drawing.Size(709, 380);
             this.Controls.Add(this.tableLayoutPanel);
             this.Name = "LoginRegisterForm";
             this.Text = "Login/Register";

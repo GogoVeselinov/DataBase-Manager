@@ -119,5 +119,9 @@ namespace DataBase_Manager.Forms.AuthForms
             }
         }
 
+        private void lblUsername_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
